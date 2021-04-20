@@ -1,1 +1,1 @@
-<?php include once("main.html") ?>
+<?php include once("Location: /main.html") ?>
