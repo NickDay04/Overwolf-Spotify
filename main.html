@@ -3,7 +3,10 @@
     <title>Your Spotify Code!</title>
 </head>
 <body>
-    <p>
-        CODE HERE
+    <p id="code">
+        SOMETHING HAS GONE WRONG, CONTACT SUPPORT
     </p>
+    <script>
+        document.getElementById("code").innerHTML = window.location.href;
+    </script>
 </body>
