@@ -1,2 +1,2 @@
 # Overwolf-Spotify
-A Spotify overlay which is compatible with Overwolf
+This branch is used to manage the Heroku server
