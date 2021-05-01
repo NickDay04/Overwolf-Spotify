@@ -4,7 +4,8 @@
   "description": "This branch is used to manage the Heroku server",
   "main": "clip.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node clip.js"
   },
   "repository": {
     "type": "git",
