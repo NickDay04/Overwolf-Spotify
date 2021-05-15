@@ -4,6 +4,13 @@ from flask_restful import Api, Resource
 app = Flask(__name__)
 api = Api(app)
 
+#region HOME {WEBSITE HOME PAGE}
+@app.route("/")
+def home():
+
+    return render_template("home.html")
+#endregion
+
 #region WEBSITE {SHOW USER CODE}
 # https://accounts.spotify.com/authorize?client_id=91b7ed5b61984131a7d7425d890dbdcf&response_type=code&redirect_uri=https%3A%2F%2Foverwolf-spotify-code.herokuapp.com/code%2Fmain.html&show_dialog=false
 @app.route("/code")
