@@ -1,5 +1,7 @@
 from flask import Flask, request, render_template
 from flask_restful import Api, Resource
+import requests
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -11,7 +13,7 @@ def home():
     return render_template("home.html")
 #endregion
 
-#region WEBSITE {SHOW USER CODE}
+#region WEBSITE {SHOW USER CODE} /* COMPLETE */
 # https://accounts.spotify.com/authorize?client_id=91b7ed5b61984131a7d7425d890dbdcf&response_type=code&redirect_uri=https%3A%2F%2Foverwolf-spotify-code.herokuapp.com/code%2Fmain.html&show_dialog=false
 @app.route("/code")
 def Get_User_Code():
@@ -22,13 +24,23 @@ def Get_User_Code():
 #endregion
 
 #region API
-class HelloWorld(Resource):
+class Authorisation(Resource):
 
-    def get(self):
+    def post(self, code, clientId, clientSecret):
 
-        return {"Hello world!"}
+        response = requests.post(f"https://accounts.spotify.com/api/token", data={"grant_type": "authorisation_code", "code": code, "redirect_uri": "https://overwolf-spotify-code.herokuapp.com", "client_id": clientId, "client_secret": clientSecret})
+        
+        try:
 
-api.add_resource(HelloWorld, "/helloworld")
+            refreshToken = json.loads(response)["refresh_token"]
+            return {refreshToken}
+        
+        except:
+
+            return {f"ERROR {response}"}
+
+
+api.add_resource(Authorisation, "/clip/authorisation/<str:code>/<str:clientId>/<str:clientSecret>")
 #endregion
 
 if __name__ == "__main__":
