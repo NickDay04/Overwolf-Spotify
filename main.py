@@ -34,8 +34,8 @@ class Authorisation(Resource):
         
         try:
 
-            refreshToken = json.loads(response)["refresh_token"]
-            return {refreshToken}
+            # refreshToken = json.loads(response)["refresh_token"]
+            return {"pogchamp"}
         
         except:
 
