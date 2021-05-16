@@ -39,7 +39,7 @@ class Authorisation(Resource):
         
         except:
 
-            return jsonify({"error": str(response)})
+            return jsonify({"error": str(response.text)})
 
 
 api.add_resource(Authorisation, "/clip/authorisation")
