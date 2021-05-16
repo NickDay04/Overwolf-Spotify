@@ -40,7 +40,7 @@ class Authorisation(Resource):
             return {f"ERROR {response}"}
 
 
-api.add_resource(Authorisation, "/clip/authorisation/<str:code>/<str:clientId>/<str:clientSecret>")
+api.add_resource(Authorisation, "/clip/authorisation/<string:code>/<string:clientId>/<string:clientSecret>")
 #endregion
 
 if __name__ == "__main__":
