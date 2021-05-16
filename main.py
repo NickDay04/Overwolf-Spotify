@@ -1,7 +1,7 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
 from flask_restful import Api, Resource
 import requests
-# import json
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -34,12 +34,12 @@ class Authorisation(Resource):
         
         try:
 
-            # refreshToken = json.loads(response)["refresh_token"]
-            return {"pogchamp"}
+            refreshToken = json.loads(response)["refresh_token"]
+            return jsonify({"refresh_token": refreshToken})
         
         except:
 
-            return {f"ERROR {response}"}
+            return jsonify({"error": "some shit happend idk"})
 
 
 api.add_resource(Authorisation, "/clip/authorisation")
