@@ -26,7 +26,9 @@ def Get_User_Code():
 #region API
 class Authorisation(Resource):
 
-    def post(self, code, clientId, clientSecret):
+    def post(self):
+
+        code = request.args["code"]
 
         response = requests.post(f"https://accounts.spotify.com/api/token", data={"grant_type": "authorisation_code", "code": code, "redirect_uri": "https://overwolf-spotify-code.herokuapp.com", "client_id": clientId, "client_secret": clientSecret})
         
@@ -40,7 +42,7 @@ class Authorisation(Resource):
             return {f"ERROR {response}"}
 
 
-api.add_resource(Authorisation, "/clip/authorisation/<string:code>/<string:clientId>/<string:clientSecret>")
+api.add_resource(Authorisation, "/clip/authorisation")
 #endregion
 
 if __name__ == "__main__":
