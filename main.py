@@ -14,7 +14,7 @@ def home():
 #endregion
 
 #region WEBSITE {SHOW USER CODE} /* COMPLETE */
-# https://accounts.spotify.com/authorize?client_id=91b7ed5b61984131a7d7425d890dbdcf&response_type=code&redirect_uri=https%3A%2F%2Foverwolf-spotify-code.herokuapp.com/code%2Fmain.html&show_dialog=false
+# https://accounts.spotify.com/authorize?client_id=91b7ed5b61984131a7d7425d890dbdcf&response_type=code&redirect_uri=https%3A%2F%2Foverwolf-spotify-code.herokuapp.com%2Fcode&show_dialog=false
 @app.route("/code")
 def Get_User_Code():
 
