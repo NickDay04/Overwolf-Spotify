@@ -35,11 +35,11 @@ class Authorisation(Resource):
         try:
 
             refreshToken = json.loads(response)["refresh_token"]
-            return jsonify({"refresh_token": refreshToken})
+            return jsonify({"refresh_token": str(refreshToken)})
         
         except:
 
-            return jsonify({"error": response})
+            return jsonify({"error": str(response)})
 
 
 api.add_resource(Authorisation, "/clip/authorisation")
