@@ -1,10 +1,12 @@
 from flask import Flask, request, render_template, jsonify
 from flask_restful import Api, Resource
+from flask_cors import CORS
 import requests
 import json
 
 app = Flask(__name__)
 api = Api(app)
+core = CORS(app, resources={r"/clip/*": {"origins": "*"}})
 
 #region HOME {WEBSITE HOME PAGE}
 @app.route("/")
