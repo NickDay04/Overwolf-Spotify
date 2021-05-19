@@ -93,6 +93,8 @@ class PausePlay(Resource):
         else: # Not currently playing
 
             self.Play()
+    
+        return "pogchamp"
 
 
 api.add_resource(Authorisation, "/clip/authorisation")
