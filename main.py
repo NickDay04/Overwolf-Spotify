@@ -78,12 +78,11 @@ class PausePlay(Resource):
 
             return "no active devices"
 
-    def get(self):
+    def put(self):
 
         self.refreshToken = request.args["refreshToken"]
         self.currentDeviceID = self.getCurrentDevice()
-
-        accessToken = self.getAccessToken()
+        self.accessToken = self.getAccessToken()
 
         response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
 
@@ -95,21 +94,9 @@ class PausePlay(Resource):
 
             self.Play()
 
-    def post(self):
-
-        self.refreshToken = request.args["refreshToken"]
-
-        accessToken = self.getAccessToken()
-
-        data = {"Authorization": f"Bearer {accessToken}", 
-            "Accept": "application/json", 
-            "Content-Type": "application/json", 
-            "device_id": "dd9d11375d60526824305b61f5599e6257783f74"}
-
-        response = requests.put("https://api.spotify.com/v1/me/player/pause", headers=data)
 
 api.add_resource(Authorisation, "/clip/authorisation")
-api.add_resource(PausePlay, "/clip/pause")
+api.add_resource(PausePlay, "/clip/pauseplay")
 #endregion
 
 if __name__ == "__main__":
