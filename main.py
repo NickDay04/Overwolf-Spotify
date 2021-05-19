@@ -66,7 +66,7 @@ class PausePlay(Resource):
 
     def getCurrentDevice(self):
 
-        refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {accessToken}"}).text)
+        refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"}).text)
 
         for i in list(refreshResponse["devices"]):
 
