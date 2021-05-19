@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, jsonify
+from flask import Flask, request, render_template, jsonify, Response
 from flask_restful import Api, Resource
 from flask_cors import CORS
 import requests
@@ -34,6 +34,9 @@ class Authorisation(Resource):
 
         response = requests.post(f"https://accounts.spotify.com/api/token", data={"grant_type": "authorization_code", "code": code, "redirect_uri": "https://overwolf-spotify-code.herokuapp.com/code", "client_id": "91b7ed5b61984131a7d7425d890dbdcf", "client_secret": "35557b16e54348f2a386df61ece15d06"})
         
+        apiResponse = Response()
+        apiResponse.body = {"response"}
+
         return jsonify({"response": str(response.text)})
 
 
