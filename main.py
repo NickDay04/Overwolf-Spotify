@@ -70,9 +70,9 @@ class PausePlay(Resource):
 
         for i in list(refreshResponse["devices"]):
 
-            if bool(json.loads(i)["is_active"]):
+            if bool(i["is_active"]):
 
-                return json.loads(i)["id"]
+                return i["id"]
         
         else:
 
