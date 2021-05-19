@@ -41,12 +41,65 @@ class Authorisation(Resource):
 
 class PausePlay(Resource):
 
-    def post(self):
+    def Pause(self):
 
-        refreshToken = request.args["refreshToken"]
+        data = {"Authorization": f"Bearer {self.accessToken}", 
+            "Accept": "application/json", 
+            "Content-Type": "application/json", 
+            "device_id": self.currentDeviceID}
+
+        response = requests.put("https://api.spotify.com/v1/me/player/pause", headers=data)
+
+    def Play(self):
+
+        data = {"Authorization": f"Bearer {self.accessToken}", 
+            "Accept": "application/json", 
+            "Content-Type": "application/json", 
+            "device_id": self.currentDeviceID}
+
+        response = requests.put("https://api.spotify.com/v1/me/player/play", headers=data)
+
+    def getAccessToken(self):
 
         refreshResponse = requests.post("https://accounts.spotify.com/api/token", data={"grant_type": "refresh_token", "refresh_token": refreshToken, "client_id": "91b7ed5b61984131a7d7425d890dbdcf", "client_secret": "35557b16e54348f2a386df61ece15d06"})
-        accessToken = json.loads(refreshResponse.text)["access_token"]
+        return json.loads(refreshResponse.text)["access_token"]
+
+    def getCurrentDevice(self):
+
+        refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {accessToken}"}).text)
+
+        for i in list(refreshResponse["devices"]):
+
+            if bool(json.loads(i)["is_active"]):
+
+                return json.loads(i)["id"]
+        
+        else:
+
+            return "no active devices"
+
+    def get(self):
+
+        self.refreshToken = request.args["refreshToken"]
+        self.currentDeviceID = self.getCurrentDevice()
+
+        accessToken = self.getAccessToken()
+
+        response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
+
+        if (json.loads(response.text)["is_playing"]): # Currently playing
+
+            self.Pause()
+
+        else: # Not currently playing
+
+            self.Play()
+
+    def post(self):
+
+        self.refreshToken = request.args["refreshToken"]
+
+        accessToken = self.getAccessToken()
 
         data = {"Authorization": f"Bearer {accessToken}", 
             "Accept": "application/json", 
@@ -56,6 +109,7 @@ class PausePlay(Resource):
         response = requests.put("https://api.spotify.com/v1/me/player/pause", headers=data)
 
 api.add_resource(Authorisation, "/clip/authorisation")
+api.add_resource(PausePlay, "/clip/pause")
 #endregion
 
 if __name__ == "__main__":
