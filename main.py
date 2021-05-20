@@ -26,6 +26,26 @@ def Get_User_Code():
 #endregion
 
 #region API
+
+def getAccessToken(refreshToken):
+
+    refreshResponse = requests.post("https://accounts.spotify.com/api/token", data={"grant_type": "refresh_token", "refresh_token": refreshToken, "client_id": "91b7ed5b61984131a7d7425d890dbdcf", "client_secret": "35557b16e54348f2a386df61ece15d06"})
+    return json.loads(refreshResponse.text)["access_token"]
+
+def getCurrentDevice(accessToken):
+
+    refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {accessToken}"}).text)
+
+    for i in list(refreshResponse["devices"]):
+
+        if bool(i["is_active"]):
+
+            return i["id"]
+    
+    else:
+
+        return "no active devices"
+
 class Authorisation(Resource):
 
     def post(self):
@@ -59,30 +79,11 @@ class PausePlay(Resource):
 
         response = requests.put("https://api.spotify.com/v1/me/player/play", headers=data)
 
-    def getAccessToken(self):
-
-        refreshResponse = requests.post("https://accounts.spotify.com/api/token", data={"grant_type": "refresh_token", "refresh_token": self.refreshToken, "client_id": "91b7ed5b61984131a7d7425d890dbdcf", "client_secret": "35557b16e54348f2a386df61ece15d06"})
-        return json.loads(refreshResponse.text)["access_token"]
-
-    def getCurrentDevice(self):
-
-        refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"}).text)
-
-        for i in list(refreshResponse["devices"]):
-
-            if bool(i["is_active"]):
-
-                return i["id"]
-        
-        else:
-
-            return "no active devices"
-
     def put(self):
 
         self.refreshToken = request.args["refreshToken"]
-        self.accessToken = self.getAccessToken()
-        self.currentDeviceID = self.getCurrentDevice()
+        self.accessToken = getAccessToken(self.refreshToken)
+        self.currentDeviceID = getCurrentDevice(self.accessToken)
 
         response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {self.accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
 
