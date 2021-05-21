@@ -106,9 +106,22 @@ class Previous(Resource):
 
         response = requests.post(f"https://api.spotify.com/v1/me/player/previous?device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
 
+
+class Next(Resource):
+
+    def post(self):
+
+        self.refreshToken = request.args["refreshToken"]
+        self.accessToken = getAccessToken(self.refreshToken)
+        self.currentDeviceID = getCurrentDevice(self.accessToken)
+
+        response = requests.post(f"https://api.spotify.com/v1/me/player/next?device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
+
+
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
 api.add_resource(Previous, "/clip/previous")
+api.add_resource(Next, "/clip/next")
 #endregion
 
 if __name__ == "__main__":
