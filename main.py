@@ -118,10 +118,54 @@ class Next(Resource):
         response = requests.post(f"https://api.spotify.com/v1/me/player/next?device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
 
 
+class ChangeVol(Resource):
+
+    def getCurrentVolume(self):
+
+        refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"}).text)
+        for i in list(refreshResponse["devices"]):
+
+            if bool(json.loads(i)["is_active"]):
+
+                return json.loads(i)["volume_percent"]
+            
+            else:
+
+                return "no active devices"
+
+    def put(self):
+
+        self.refreshToken = request.args["refreshToken"]
+        self.mode = request.args["mode"] # volup or voldown
+        self.accessToken = getAccessToken(self.refreshToken)
+        self.currentDeviceID = getCurrentDevice(self.accessToken)
+        self.currentVolume = self.getCurrentVolume()
+
+        if self.currentVolume != "no active devices":
+
+            if self.mode == "up":
+
+                self.newVol = self.currentVolume + 10
+                if self.newVol > 100:
+
+                    self.newVol = 100
+
+            else:
+
+                self.newVol = self.currentVolume - 10
+                if self.newVol < 0:
+
+                    self.newVol = 0
+        
+            response = requests.put(f"https://api.spotify.com/v1/me/player/volume?volume_percent={self.newVol}&device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
+
+
+
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
 api.add_resource(Previous, "/clip/previous")
 api.add_resource(Next, "/clip/next")
+api.add_resource(ChangeVol, "/clip/changevol")
 #endregion
 
 if __name__ == "__main__":
