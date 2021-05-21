@@ -94,12 +94,21 @@ class PausePlay(Resource):
         else: # Not currently playing
 
             self.Play()
-    
-        return "pogchamp"
 
+
+class Previous(Resource):
+
+    def post(self):
+
+        self.refreshToken = request.args["refreshToken"]
+        self.accessToken = getAccessToken(self.refreshToken)
+        self.currentDeviceID = getCurrentDevice(self.accessToken)
+
+        response = requests.post(f"https://api.spotify.com/v1/me/player/previous?device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
 
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
+api.add_resource(Previous, "/clip/previous")
 #endregion
 
 if __name__ == "__main__":
