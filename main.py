@@ -123,12 +123,9 @@ class ChangeVol(Resource):
     def getCurrentVolume(self):
 
         refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"}).text)
-        
         for i in list(refreshResponse["devices"]):
 
-            print(i)
-
-            if bool(json.loads(i)["is_active"]):
+            if bool(i["is_active"]):
 
                 return json.loads(i)["volume_percent"]
             
