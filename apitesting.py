@@ -27,8 +27,8 @@ accessToken = json.loads(refreshResponse.text)["access_token"]
 # response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
 # print(response.text)
 
-refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {accessToken}"}).text)
-print(list(refreshResponse["devices"]))
+# refreshResponse = json.loads(requests.get("https://api.spotify.com/v1/me/player/devices", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {accessToken}"}).text)
+# print(list(refreshResponse["devices"]))
 
 # for i in list(refreshResponse["devices"]):
 
@@ -36,5 +36,8 @@ print(list(refreshResponse["devices"]))
 
 #         print(i["id"])
 
-# response = requests.put("https://overwolf-spotify-code.herokuapp.com/clip/pauseplay?refreshToken=AQBijdRb9PWK4hcovKqtUlsMRNbpfiu4TXVOfoAK_Y4Dn2QRV5pQn7mIlYufNgYBID57eUXu_WtI5iWw3Z3Ysn4Wn0-EW9OwYgXP0cLagYkuLcWFMQqQx_qrHh7na8C43uI")
+# response = requests.post("https://overwolf-spotify-code.herokuapp.com/clip/next?refreshToken=AQBijdRb9PWK4hcovKqtUlsMRNbpfiu4TXVOfoAK_Y4Dn2QRV5pQn7mIlYufNgYBID57eUXu_WtI5iWw3Z3Ysn4Wn0-EW9OwYgXP0cLagYkuLcWFMQqQx_qrHh7na8C43uI")
 # print(response.text)
+
+response = requests.put(f"https://overwolf-spotify-code.herokuapp.com/clip/changevol?refreshToken={refreshToken}&mode=up")
+print(response.text)
