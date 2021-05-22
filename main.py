@@ -127,7 +127,7 @@ class ChangeVol(Resource):
 
             if bool(i["is_active"]):
 
-                return json.loads(i)["volume_percent"]
+                return i["volume_percent"]
             
             else:
 
