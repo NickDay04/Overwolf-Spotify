@@ -160,6 +160,15 @@ class ChangeVol(Resource):
             response = requests.put(f"https://api.spotify.com/v1/me/player/volume?volume_percent={self.newVol}&device_id={self.currentDeviceID}", headers={"Accept": "application/json", "Content-Type": "application/json", "Authorization": f"Bearer {self.accessToken}"})
 
 
+# TODO: program this to return the song title and artist name for the headers, and the volume for the slider
+# class GetInfo(Resource):
+
+#     def get(self):
+
+#         self.refreshToken = request.args["refreshToken"]
+
+#         return songTitle, artistName, volume
+
 
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
