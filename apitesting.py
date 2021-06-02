@@ -36,5 +36,8 @@ accessToken = json.loads(refreshResponse.text)["access_token"]
 
 #         print(i["id"])
 
-response = requests.put("https://overwolf-spotify-code.herokuapp.com/clip/pauseplay?refreshToken=AQBijdRb9PWK4hcovKqtUlsMRNbpfiu4TXVOfoAK_Y4Dn2QRV5pQn7mIlYufNgYBID57eUXu_WtI5iWw3Z3Ysn4Wn0-EW9OwYgXP0cLagYkuLcWFMQqQx_qrHh7na8C43uI")
+# response = requests.post("https://overwolf-spotify-code.herokuapp.com/clip/next?refreshToken=AQBijdRb9PWK4hcovKqtUlsMRNbpfiu4TXVOfoAK_Y4Dn2QRV5pQn7mIlYufNgYBID57eUXu_WtI5iWw3Z3Ysn4Wn0-EW9OwYgXP0cLagYkuLcWFMQqQx_qrHh7na8C43uI")
+# print(response.text)
+
+response = requests.put(f"https://overwolf-spotify-code.herokuapp.com/clip/changevol?refreshToken={refreshToken}&mode=up")
 print(response.text)
