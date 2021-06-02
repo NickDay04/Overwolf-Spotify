@@ -169,14 +169,6 @@ class ChangeVol(Resource):
 
 #         return songTitle, artistName, volume
 
-
-class Previous(Resource):
-
-    def put(self):
-
-        #putcodeshithere
-
-
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
 api.add_resource(Previous, "/clip/previous")
