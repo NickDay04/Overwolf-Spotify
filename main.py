@@ -98,6 +98,13 @@ class PausePlay(Resource):
         return "pogchamp"
 
 
+class Previous(Resource):
+
+    def put(self):
+
+        #putcodeshithere
+
+
 api.add_resource(Authorisation, "/clip/authorisation")
 api.add_resource(PausePlay, "/clip/pauseplay")
 #endregion
