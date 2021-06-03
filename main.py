@@ -30,6 +30,7 @@ def Get_User_Code():
 def getAccessToken(refreshToken):
 
     refreshResponse = requests.post("https://accounts.spotify.com/api/token", data={"grant_type": "refresh_token", "refresh_token": refreshToken, "client_id": "91b7ed5b61984131a7d7425d890dbdcf", "client_secret": "35557b16e54348f2a386df61ece15d06"})
+    print(refreshToken)
     print(refreshResponse.text)
     return json.loads(refreshResponse.text)["access_token"]
 
