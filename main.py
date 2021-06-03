@@ -88,7 +88,7 @@ class PausePlay(Resource):
 
         response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {self.accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
 
-        if (json.loads(response.text)["is_playing"]): # Currently playing
+        if json.loads(response.text)["is_playing"]: # Currently playing
 
             self.Pause()
 
