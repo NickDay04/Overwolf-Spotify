@@ -84,6 +84,7 @@ class PausePlay(Resource):
 
         self.refreshToken = request.args["refreshToken"]
         self.accessToken = getAccessToken(self.refreshToken)
+        print(self.accessToken)
         self.currentDeviceID = getCurrentDevice(self.accessToken)
 
         response = requests.get("https://api.spotify.com/v1/me/player/currently-playing", headers={"Authorization": f"Bearer {self.accessToken}", "Accept": "application/json", "Content-Type": "application/json"})
